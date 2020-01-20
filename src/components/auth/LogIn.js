@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import FormErrors from "../FormErrors";
 import Validate from "../util/Validation";
+import { Auth } from "aws-amplify";
 
 class LogIn extends Component {
   state = {
     username: "",
     password: "",
     errors: {
-      blankfield: false
+      blankfield: false,
+      cognito: null
     }
   };
 
   clearErrors = () => {
     this.setState({
       errors: {
-        blankfield: false
+        blankfield: false,
+        cognito: null
       }
     });
   };
@@ -22,7 +25,7 @@ class LogIn extends Component {
   handleSubmit = async event => {
     //Prevent page reload
     event.preventDefault();
-    
+
     //Form validation
     this.clearErrors();
     const error = Validate(event, this.state);
@@ -32,6 +35,18 @@ class LogIn extends Component {
       });
     }
     //Integrate Cognito here on valid form submission
+    try {
+      const user = await Auth.signIn(this.state.username, this.state.password);
+      console.log(user);
+      this.props.history.push("/");
+    } catch (error) {
+      let err = null;
+      !error.message ? (err = { Message: error }) : (err = error);
+
+      this.setState({
+        errors: { ...this.state.errors, cognito: err }
+      });
+    }
   };
 
   onInputChange = event => {
@@ -51,8 +66,8 @@ class LogIn extends Component {
           <form onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control has-icons-left">
-                <input 
-                  className="input" 
+                <input
+                  className="input"
                   type="text"
                   id="username"
                   placeholder="Enter username or email"
@@ -66,8 +81,8 @@ class LogIn extends Component {
             </div>
             <div className="field">
               <p className="control has-icons-left">
-                <input 
-                  className="input" 
+                <input
+                  className="input"
                   type="password"
                   id="password"
                   placeholder="Password"
@@ -86,9 +101,7 @@ class LogIn extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success">
-                  Login
-                </button>
+                <button className="button is-success">Login</button>
               </p>
             </div>
           </form>
