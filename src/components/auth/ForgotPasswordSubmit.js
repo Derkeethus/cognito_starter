@@ -92,6 +92,52 @@ class ForgotPasswordSubmit extends Component {
               </p>
             </div>
             <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input"
+                  type="text"
+                  id="verificationcode"
+                  placeholder="Enter your code"
+                  value={this.state.verificationcode}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-user"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input"
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input"
+                  type="password"
+                  id="confirmpassword"
+                  placeholder="confirmpassword"
+                  value={this.state.confirmpassword}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+
+            <div className="field">
               <p className="control">
                 <button className="button is-success">Submit</button>
               </p>

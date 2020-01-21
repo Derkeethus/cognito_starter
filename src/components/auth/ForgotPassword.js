@@ -41,7 +41,6 @@ class ForgotPassword extends Component {
       console.log(user);
       this.props.auth.authenticateUser(true);
       this.props.auth.setAuthUser(user);
-      this.props.history.push("/");
     } catch (error) {
       let err = null;
       !error.message ? (err = { Message: error }) : (err = error);
